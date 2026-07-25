@@ -1,0 +1,11 @@
+zh_CN:
+  site_settings:
+    chat_channels_integrations_enabled: "启用从公开 Discourse Chat 频道到 Matrix 房间的转发"
+    chat_channels_integrations_matrix_homeserver: "Matrix homeserver HTTPS 地址。私有主机还必须加入允许的内部主机列表。"
+    chat_channels_integrations_matrix_access_token: "用于发送消息的 Matrix 账户 access token"
+    chat_channels_integrations_matrix_use_notice: "使用 m.notice 而不是 m.text 发送 Matrix 消息"
+
+  chat_channels_integrations:
+    admin:
+      title: "Chat 频道集成"
+      description: "将公开 Discourse Chat 频道消息转发到 Matrix 房间"

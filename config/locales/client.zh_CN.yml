@@ -1,0 +1,26 @@
+zh_CN:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          chat_channels_integrations: "Chat 频道集成"
+  js:
+    chat_channels_integrations:
+      admin:
+        title: "Chat 频道集成"
+        description: "将公开 Discourse Chat 频道消息转发到 Matrix 房间。请先在站点设置中配置 homeserver 和 access token。"
+        nav:
+          rules: "频道映射"
+          rules_description: "将公开 Chat 频道映射到 Matrix 房间"
+        new_rule: "新建映射"
+        rules: "映射规则"
+        chat_channel: "Discourse Chat 频道"
+        matrix_room_id: "Matrix 房间 ID"
+        enabled: "启用"
+        actions: "操作"
+        create: "创建映射"
+        save: "保存"
+        delete: "删除"
+        no_rules: "尚未创建频道映射。"
+        created: "频道映射已创建"
+        confirm_delete: "确定删除到 %{room} 的映射吗？"

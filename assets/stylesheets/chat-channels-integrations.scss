@@ -1,0 +1,36 @@
+.chat-channels-integrations {
+  &__new-rule,
+  &__rules {
+    margin-block: 1.5rem;
+  }
+
+  &__form {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    .control-group {
+      margin: 0;
+    }
+  }
+
+  &__room-field,
+  &__room-field input {
+    min-width: 20rem;
+  }
+
+  &__rules {
+    overflow-x: auto;
+
+    input {
+      min-width: 20rem;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.5rem;
+    white-space: nowrap;
+  }
+}

@@ -1,0 +1,26 @@
+en:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          chat_channels_integrations: "Chat Channels Integrations"
+  js:
+    chat_channels_integrations:
+      admin:
+        title: "Chat Channels Integrations"
+        description: "Forward public Discourse Chat channel messages to Matrix rooms. Configure the homeserver and access token in site settings first."
+        nav:
+          rules: "Channel mappings"
+          rules_description: "Map public Chat channels to Matrix rooms"
+        new_rule: "New mapping"
+        rules: "Mappings"
+        chat_channel: "Discourse Chat channel"
+        matrix_room_id: "Matrix room ID"
+        enabled: "Enabled"
+        actions: "Actions"
+        create: "Create mapping"
+        save: "Save"
+        delete: "Delete"
+        no_rules: "No channel mappings have been created."
+        created: "Channel mapping created"
+        confirm_delete: "Delete the mapping to %{room}?"

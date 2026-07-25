@@ -1,0 +1,75 @@
+feature: 2026-07-25-chat-channels-to-matrix
+created: 2026-07-25
+
+steps:
+  - action: "持久化与编排骨架：建立规则 schema、模型、事件监听和后台任务入口"
+    exit_signal: "插件 Ruby 语法通过，规则约束与事件只入队 ID 可验证"
+    status: done
+  - action: "Matrix 计算节点：实现安全 HTTP client、消息格式化与错误分类"
+    exit_signal: "测试覆盖 v3 PUT、Bearer header、HTML 转义、notice/text 和状态分类"
+    status: done
+  - action: "后台投递节点：接入记录重读、来源过滤、多规则扇出、幂等与有限重试"
+    exit_signal: "job 测试覆盖公开频道、DM、incoming webhook、多目标和永久/暂态错误"
+    status: done
+  - action: "管理 API：接通 admin-only 规则 CRUD 和公开频道列表"
+    exit_signal: "匿名及普通用户不可访问，管理员 CRUD 与服务端验证通过"
+    status: done
+  - action: "管理前端：实现规则列表、创建、编辑、启停和删除交互"
+    exit_signal: "当前 Ember 路由可加载，真实 API 数据可渲染和更新"
+    status: done
+  - action: "集成验证：执行迁移、加载、Ruby/JS lint 与针对性测试"
+    exit_signal: "可执行检查全部通过，或环境限制被明确记录且不掩盖失败"
+    status: done
+
+checks:
+  - item: "Rule 一条记录只映射一个公开 Chat 频道和一个 Matrix 房间，同频道允许多个不同房间且禁止重复目标"
+    source: 名词契约
+    status: done
+  - item: "Matrix client 使用 v3 PUT、Bearer header、稳定 transaction ID、SSRF 防护和永久/暂态错误分类"
+    source: 名词契约
+    status: done
+  - item: "formatter 输出纯文本及全量转义的 Matrix HTML，支持换行、空正文、附件文件名和消息 full_url"
+    source: 名词契约
+    status: done
+  - item: "事件监听只入队 chat_message_id，后台重读 Message/Channel/User/Rules 后逐目标发送"
+    source: 编排骨架
+    status: done
+  - item: "DM、群 DM、incoming webhook、已删除或已不存在记录不会请求 Matrix"
+    source: 跨层纪律
+    status: done
+  - item: "管理员 API 双重鉴权，token 不进入 URL、JSON、异常或日志，动态 HTML 全部转义"
+    source: 跨层纪律
+    status: done
+  - item: "插件生命周期事件与 admin route 可完整卸载"
+    source: 挂载点
+    status: done
+  - item: "独立规则表及唯一索引/Chat channel 关联可完整卸载"
+    source: 挂载点
+    status: done
+  - item: "四个 chat_channels_integrations 站点设置可完整卸载"
+    source: 挂载点
+    status: done
+  - item: "Admin Engine 路由挂载可完整卸载"
+    source: 挂载点
+    status: done
+  - item: "Admin Plugins 配置导航、route map 和规则页面可完整卸载"
+    source: 挂载点
+    status: done
+  - item: "不实现 Matrix 反向同步、附件上传、原生线程、编辑删除同步、E2EE 或复杂投递状态机"
+    source: 范围守护
+    status: done
+  - item: "不修改上游 chat/chat-integration 插件且不依赖旧 PluginStore Channel/Rule"
+    source: 范围守护
+    status: done
+  - item: "公开频道新消息向全部启用规则各发送一次 Matrix 请求"
+    source: 验收场景
+    status: done
+  - item: "notice 设置、HTML 特殊字符、换行、空正文上传和线程回复格式正确"
+    source: 验收场景
+    status: done
+  - item: "永久错误不重试，暂态错误有限重试，日志包含消息/频道/房间/status 且不含 token"
+    source: 验收场景
+    status: done
+  - item: "匿名及普通用户不可访问管理 API，管理员可完整 CRUD 并只能选择公开频道"
+    source: 验收场景
+    status: done

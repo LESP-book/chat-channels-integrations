@@ -1,0 +1,11 @@
+en:
+  site_settings:
+    chat_channels_integrations_enabled: "Enable forwarding from public Discourse Chat channels to Matrix rooms"
+    chat_channels_integrations_matrix_homeserver: "Matrix homeserver HTTPS URL. Private hosts must also be added to allowed internal hosts."
+    chat_channels_integrations_matrix_access_token: "Access token for the Matrix account used to send messages"
+    chat_channels_integrations_matrix_use_notice: "Send Matrix messages as m.notice instead of m.text"
+
+  chat_channels_integrations:
+    admin:
+      title: "Chat Channels Integrations"
+      description: "Forward public Discourse Chat channel messages to Matrix rooms"
