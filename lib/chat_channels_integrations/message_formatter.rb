@@ -25,22 +25,30 @@ module ChatChannelsIntegrations
     private
 
     def body
+      quoted_body =
+        [message_text, attachment_text].reject(&:empty?).join("\n\n").gsub(/^/, "> ")
+
       [
-        "#{sender_name} (#{username}) 在 ##{channel_name} 频道中发送了消息：",
-        message_text,
-        attachment_text,
-        "在 Discourse 中查看：\n#{@message.full_url}",
+        "#{sender_name} (#{username}) 在 ##{channel_name} " \
+          "频道（#{@message.full_url}）中发送了消息：",
+        quoted_body,
       ].reject(&:empty?).join("\n\n")
     end
 
     def formatted_body
+      quoted_body =
+        [
+          html_message_text,
+          escape(attachment_text).gsub("\n", "<br>\n"),
+        ].reject(&:empty?).join("<br>\n<br>\n")
+      quoted_body = "<blockquote>#{quoted_body}</blockquote>" unless quoted_body.empty?
+
       [
         "<strong>#{escape(sender_name)} (#{escape(username)})</strong> 在 " \
-          "<strong>##{escape(channel_name)}</strong> 频道中发送了消息：",
-        html_message_text,
-        escape(attachment_text).gsub("\n", "<br>\n"),
-        "在 Discourse 中查看：<br>\n<a href=\"#{escape(@message.full_url)}\">#{escape(@message.full_url)}</a>",
-      ].reject(&:empty?).join("<br>\n<br>\n")
+          "<a href=\"#{escape(@message.full_url)}\">" \
+          "<strong>##{escape(channel_name)} 频道</strong></a>中发送了消息：",
+        quoted_body,
+      ].reject(&:empty?).join("\n")
     end
 
     def sender_name
@@ -75,7 +83,7 @@ module ChatChannelsIntegrations
       filenames = @message.uploads.filter_map(&:original_filename)
       return "" if filenames.empty?
 
-      "附件：\n#{filenames.map { |filename| "- #{filename}" }.join("\n")}\n请在 Discourse 中查看。"
+      "附件：\n#{filenames.map { |filename| "- #{filename}" }.join("\n")}"
     end
 
     def escape(value)

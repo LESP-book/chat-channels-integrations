@@ -76,13 +76,27 @@ class MessageFormatterContractTest < Minitest::Test
     refute_includes content["body"], "##General & Help"
     assert_includes content["body"], "hello <b>world</b>\nsecond line"
     assert_includes content["body"], "<guide>.pdf"
+    assert_includes content["body"], "> hello <b>world</b>\n> second line"
+    refute_includes content["body"], "在 Discourse 中查看"
+    refute_includes content["body"], "请在 Discourse 中查看"
     assert_includes content["formatted_body"], "Alice &lt;Admin&gt; (@alice)"
     assert_includes content["formatted_body"], "#General &amp; Help"
     refute_includes content["formatted_body"], "##General &amp; Help"
     assert_includes content["formatted_body"], "hello &lt;b&gt;world&lt;/b&gt;<br>\nsecond line"
     assert_includes content["formatted_body"], "&lt;guide&gt;.pdf"
     assert_includes content["formatted_body"], "x=1&amp;y=2"
+    assert_includes(
+      content["formatted_body"],
+      '<a href="https://forum.example.com/chat/c/-/12/345?x=1&amp;y=2">' \
+        "<strong>#General &amp; Help 频道</strong></a>",
+    )
+    assert_includes(
+      content["formatted_body"],
+      "<blockquote>hello &lt;b&gt;world&lt;/b&gt;<br>\nsecond line",
+    )
     refute_includes content["formatted_body"], "hello <b>world</b>"
+    refute_includes content["formatted_body"], "在 Discourse 中查看"
+    refute_includes content["formatted_body"], "请在 Discourse 中查看"
   end
 
   def test_upload_only_message_and_text_message_type
@@ -104,6 +118,7 @@ class MessageFormatterContractTest < Minitest::Test
     assert_equal "m.text", content["msgtype"]
     assert_includes content["body"], "guide.pdf"
     assert_includes content["body"], message.full_url
+    assert_includes content["formatted_body"], "<blockquote>附件：<br>\n- guide.pdf</blockquote>"
   end
 end
 

@@ -38,8 +38,8 @@ RAILS_ENV=production bundle exec rake db:migrate
 1. 确保目标 Matrix 用户已加入对应房间，并拥有发送消息权限。
 2. 创建并启用一条映射。
 3. 在映射的公开 Chat 频道发送包含换行和 HTML 特殊字符（例如 `<test> & text`）的消息。
-4. 确认 Matrix 收到发送者、频道名、正文和该消息的 Discourse 链接；确认 HTML 显示的是文本而不是执行标签。
-5. 发送一个只有附件、没有正文的 Chat 消息，确认 Matrix 显示文件名及返回 Discourse 查看提示。
+4. 确认 Matrix 收到发送者、可点击的频道名和引用格式的正文；点击频道名应打开该条 Discourse 消息，并确认 HTML 显示的是文本而不是执行标签。
+5. 发送一个只有附件、没有正文的 Chat 消息，确认 Matrix 在引用块中显示文件名。
 6. 使用 Discourse Chat incoming webhook 向同一频道写入消息，确认不会再次转发。
 7. 暂时填入无效 token，确认 Discourse Chat 发消息仍然成功，并检查日志包含 message ID、channel ID、room ID 和 HTTP status，但不包含 token。
 

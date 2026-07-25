@@ -30,6 +30,8 @@ RSpec.describe ChatChannelsIntegrations::MessageFormatter do
       "<guide>.pdf",
       message.full_url,
     )
+    expect(content["body"]).to include("> Hello <b>world</b>\n> second line")
+    expect(content["body"]).not_to include("在 Discourse 中查看", "请在 Discourse 中查看")
     expect(content["format"]).to eq("org.matrix.custom.html")
     expect(content["formatted_body"]).to include(
       "Alice &lt;Admin&gt; (@alice)",
@@ -38,7 +40,16 @@ RSpec.describe ChatChannelsIntegrations::MessageFormatter do
       "&lt;guide&gt;.pdf",
       "x=1&amp;y=2",
     )
+    expect(content["formatted_body"]).to include(
+      '<a href="https://forum.example.com/chat/c/-/12/345?x=1&amp;y=2">' \
+        "<strong>#General &amp; Help 频道</strong></a>",
+      "<blockquote>Hello &lt;b&gt;world&lt;/b&gt;<br>\nsecond line",
+    )
     expect(content["formatted_body"]).not_to include("<b>world</b>")
+    expect(content["formatted_body"]).not_to include(
+      "在 Discourse 中查看",
+      "请在 Discourse 中查看",
+    )
   end
 
   it "uses m.text when notice messages are disabled" do
@@ -60,5 +71,8 @@ RSpec.describe ChatChannelsIntegrations::MessageFormatter do
 
     expect { content }.not_to raise_error
     expect(content["body"]).to include("<guide>.pdf", message.full_url)
+    expect(content["formatted_body"]).to include(
+      "<blockquote>附件：<br>\n- &lt;guide&gt;.pdf</blockquote>",
+    )
   end
 end
